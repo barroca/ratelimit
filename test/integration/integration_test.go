@@ -207,6 +207,12 @@ func TestXdsProviderBasicConfigReload(t *testing.T) {
 	})
 }
 
+func makeSimpleMemorySettings() settings.Settings {
+	s := defaultSettings()
+	s.BackendType = "memory"
+	return s
+}
+
 func makeSimpleMemcacheSettings(memcachePorts []int, localCacheSize int) settings.Settings {
 	s := defaultSettings()
 	var memcacheHostAndPort []string
@@ -230,6 +236,13 @@ func TestBasicConfigMemcache(t *testing.T) {
 		cacheSettings.CacheKeyPrefix = "prefix:"
 		t.Run("MemcacheWithPrefix", testBasicConfig(cacheSettings))
 	})
+}
+
+func TestBasicConfigMemory(t *testing.T) {
+	t.Run("Memory", testBasicConfig(makeSimpleMemorySettings()))
+	cacheSettings := makeSimpleMemorySettings()
+	cacheSettings.CacheKeyPrefix = "prefix:"
+	t.Run("MemoryWithPrefix", testBasicConfig(cacheSettings))
 }
 
 func TestConfigMemcacheWithMaxIdleConns(t *testing.T) {
