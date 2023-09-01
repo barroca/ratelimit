@@ -8,7 +8,7 @@ import (
 	"strings"
 	"sync"
 	"time"
-	
+
 	"github.com/envoyproxy/ratelimit/src/memory"
 	"github.com/envoyproxy/ratelimit/src/metrics"
 	"github.com/envoyproxy/ratelimit/src/stats"
