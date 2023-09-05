@@ -9,6 +9,8 @@ import (
 	"sync"
 	"time"
 
+	"github.com/envoyproxy/ratelimit/src/memory"
+
 	"github.com/envoyproxy/ratelimit/src/metrics"
 	"github.com/envoyproxy/ratelimit/src/stats"
 	"github.com/envoyproxy/ratelimit/src/trace"
@@ -62,6 +64,14 @@ func createLimiter(srv server.Server, s settings.Settings, localCache *freecache
 		)
 	case "memcache":
 		return memcached.NewRateLimitCacheImplFromSettings(
+			s,
+			utils.NewTimeSourceImpl(),
+			rand.New(utils.NewLockedSource(time.Now().Unix())),
+			localCache,
+			srv.Scope(),
+			statsManager)
+	case "memory":
+		return memory.NewRateLimiterCacheImplFromSettings(
 			s,
 			utils.NewTimeSourceImpl(),
 			rand.New(utils.NewLockedSource(time.Now().Unix())),
