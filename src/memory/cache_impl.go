@@ -6,13 +6,14 @@ import (
 
 	"github.com/coocood/freecache"
 	pb "github.com/envoyproxy/go-control-plane/envoy/service/ratelimit/v3"
+	gostats "github.com/lyft/gostats"
+	"golang.org/x/net/context"
+
 	"github.com/envoyproxy/ratelimit/src/config"
 	"github.com/envoyproxy/ratelimit/src/limiter"
 	"github.com/envoyproxy/ratelimit/src/settings"
 	"github.com/envoyproxy/ratelimit/src/stats"
 	"github.com/envoyproxy/ratelimit/src/utils"
-	gostats "github.com/lyft/gostats"
-	"golang.org/x/net/context"
 )
 
 type keyCounters struct {
